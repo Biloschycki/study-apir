@@ -6,13 +6,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 
-@RequestMapping
+@RequestMapping("raiz")
 
 public class PingController {
 
-    @GetMapping("/ping")
+    @GetMapping("ping")//só preciso colocar barra para palavras compostas
     public String ping(){
         return "pong";
     }
 
+     @GetMapping("rota1")
+    public String rotal(){
+        return "rota1";
+    }
 }
