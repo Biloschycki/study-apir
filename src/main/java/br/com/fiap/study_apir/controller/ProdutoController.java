@@ -1,6 +1,7 @@
 package br.com.fiap.study_apir.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.http.HttpStatus;
@@ -21,29 +22,30 @@ import br.com.fiap.study_apir.repository.RepositoryProdutoMockup;
 @RequestMapping("api/${api.version}/produtos")
 public class ProdutoController {
 
-private RepositoryProdutoMockup mockup = new RepositoryProdutoMockup();
+    private RepositoryProdutoMockup mockup = new RepositoryProdutoMockup();
 
     @PostMapping
-    public ResponseEntity<String> create(){
+    public ResponseEntity<String> create() {
         return ResponseEntity.status(HttpStatus.CREATED).body("Produto criado");
     }
+
     @GetMapping
-    public ResponseEntity<List<Produto>> findAll(){
-      return ResponseEntity.status(HttpStatus.OK).body(mockup.findAll());
+    public ResponseEntity<List<Produto>> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(mockup.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> findById(@PathVariable Long id){
-       Produto produto = mockup.findById(id);
-      return ResponseEntity.status(HttpStatus.OK).body(produto);
+    public ResponseEntity<Produto> findById(@PathVariable Long id) {
+        return mockup.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping
-    public  ResponseEntity<String> update(){
+    public ResponseEntity<String> update() {
         return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado");
     }
+
     @DeleteMapping
-    public ResponseEntity<String> delete(){
+    public ResponseEntity<String> delete() {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Produto excluido");
     }
 }
