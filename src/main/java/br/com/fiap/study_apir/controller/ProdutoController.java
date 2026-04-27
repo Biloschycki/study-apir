@@ -42,19 +42,18 @@ public class ProdutoController {
         return repository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Produto produto) {
-    //     Optional<Produto> optProduto = repository.findById(id);
-    //     if(optProduto.isPresent()){
-    //         produto.set
-    //         repository.save(produto);
-    //     }
-    //     if (mockup.update(id, produto)) {
-    //         return ResponseEntity.ok("Produto atualizado");
-    //     } else {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    // }
+    @PutMapping("/{id}")
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto produto) {
+        Optional<Produto> optProduto = repository.findById(id);
+        if(optProduto.isPresent()){
+            produto.setId(id);
+            Produto produtoAlterado=repository.save(produto);
+            return ResponseEntity.ok(produtoAlterado);
+
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {

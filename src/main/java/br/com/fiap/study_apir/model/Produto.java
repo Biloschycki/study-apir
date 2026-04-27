@@ -12,10 +12,15 @@ public class Produto {
     private  String nome;
     private   BigDecimal valor;
 
+    
+
     public Produto(Long id, String nome, BigDecimal valor) {
         this.id = id;
         this.nome = nome;
         this.valor = valor;
+    }
+
+    public Produto() {
     }
 
     public Long getId() {
